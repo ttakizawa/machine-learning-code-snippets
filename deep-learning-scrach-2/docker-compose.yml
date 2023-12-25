@@ -1,0 +1,21 @@
+version: '3'
+services:
+  python:
+    build: .
+    volumes:
+      - type: bind
+        source: "./"
+        target: "/src/"
+    user: root
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    tty: true # retain container up
+    # privileged: true
+    environment:
+      TZ: Asia/Tokyo
+    working_dir: /src
